@@ -1,0 +1,104 @@
+<main class="contenedor">
+  <h1>Formulario de registro</h1>
+  <p>Completa los siguientes datos. Todos los campos son obligatorios.</p>
+
+  <form [formGroup]="formulario" (ngSubmit)="enviar()">
+    <div class="campo">
+      <label for="nombre">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        formControlName="nombre"
+        autocomplete="given-name"
+      >
+
+      @if (formulario.controls.nombre.touched &&
+           formulario.controls.nombre.hasError('required')) {
+        <small>El nombre es obligatorio.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="apellidos">Apellidos</label>
+      <input
+        id="apellidos"
+        type="text"
+        formControlName="apellidos"
+        autocomplete="family-name"
+      >
+
+      @if (formulario.controls.apellidos.touched &&
+           formulario.controls.apellidos.hasError('required')) {
+        <small>Los apellidos son obligatorios.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="correo">Correo electrónico</label>
+      <input
+        id="correo"
+        type="email"
+        formControlName="correo"
+        autocomplete="email"
+      >
+
+      @if (formulario.controls.correo.touched) {
+        @if (formulario.controls.correo.hasError('required')) {
+          <small>El correo es obligatorio.</small>
+        } @else if (formulario.controls.correo.hasError('email')) {
+          <small>Escribe un correo válido.</small>
+        }
+      }
+    </div>
+
+    <div class="campo">
+      <label for="telefono">Teléfono</label>
+      <input
+        id="telefono"
+        type="tel"
+        formControlName="telefono"
+        autocomplete="tel"
+      >
+
+      @if (formulario.controls.telefono.touched &&
+           formulario.controls.telefono.hasError('required')) {
+        <small>El teléfono es obligatorio.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="contrasena">Contraseña</label>
+      <input
+        id="contrasena"
+        type="password"
+        formControlName="contrasena"
+        autocomplete="new-password"
+        aria-describedby="ayuda-contrasena"
+      >
+      <span id="ayuda-contrasena">Usa al menos 8 caracteres.</span>
+
+      @if (formulario.controls.contrasena.touched) {
+        @if (formulario.controls.contrasena.hasError('required')) {
+          <small>La contraseña es obligatoria.</small>
+        } @else if (formulario.controls.contrasena.hasError('minlength')) {
+          <small>La contraseña debe tener al menos 8 caracteres.</small>
+        }
+      }
+    </div>
+
+    <button type="submit" [disabled]="formulario.invalid">
+      Registrarme
+    </button>
+  </form>
+
+  @if (datosRegistrados; as datos) {
+    <section class="resultado" aria-live="polite">
+      <h2>Registro correcto</h2>
+      <p><strong>Nombre:</strong> {{ datos.nombre }}</p>
+      <p><strong>Apellidos:</strong> {{ datos.apellidos }}</p>
+      <p><strong>Correo:</strong> {{ datos.correo }}</p>
+      <p><strong>Teléfono:</strong> {{ datos.telefono }}</p>
+      <p><strong>Contraseña:</strong> Oculta por seguridad.</p>
+    </section>
+  }
+</main>
