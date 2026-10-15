@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Registro } from './registro/registro';
+import { RegistroTemplate } from './registro-template/registro-template';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Registro],
+  imports: [RegistroTemplate],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

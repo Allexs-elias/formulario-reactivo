@@ -1,0 +1,136 @@
+<main class="contenedor">
+  <h1>Registro de usuario</h1>
+  <p>Completa tus datos para registrarte.</p>
+
+  <form
+    #formulario="ngForm"
+    (ngSubmit)="registrar(formulario)"
+    (input)="registrado = false"
+  >
+    <div class="campo">
+      <label for="nombre">Nombre</label>
+      <input
+        id="nombre"
+        name="nombre"
+        type="text"
+        [(ngModel)]="usuario.nombre"
+        #nombre="ngModel"
+        required
+        minlength="3"
+        autocomplete="given-name"
+      >
+
+      @if (nombre.touched) {
+        @if (nombre.hasError('required')) {
+          <small>El nombre es obligatorio.</small>
+        } @else if (nombre.hasError('minlength')) {
+          <small>El nombre debe tener al menos 3 caracteres.</small>
+        }
+      }
+    </div>
+
+    <div class="campo">
+      <label for="apellidos">Apellidos (opcional)</label>
+      <input
+        id="apellidos"
+        name="apellidos"
+        type="text"
+        [(ngModel)]="usuario.apellidos"
+        autocomplete="family-name"
+      >
+    </div>
+
+    <div class="campo">
+      <label for="correo">Correo electrónico</label>
+      <input
+        id="correo"
+        name="correo"
+        type="email"
+        [(ngModel)]="usuario.correo"
+        #correo="ngModel"
+        required
+        email
+        autocomplete="email"
+      >
+
+      @if (correo.touched) {
+        @if (correo.hasError('required')) {
+          <small>El correo es obligatorio.</small>
+        } @else if (correo.hasError('email')) {
+          <small>Ingresa un correo válido.</small>
+        }
+      }
+    </div>
+
+    <div class="campo">
+      <label for="telefono">Teléfono</label>
+      <input
+        id="telefono"
+        name="telefono"
+        type="tel"
+        [(ngModel)]="usuario.telefono"
+        #telefono="ngModel"
+        required
+        autocomplete="tel"
+      >
+
+      @if (telefono.touched && telefono.hasError('required')) {
+        <small>El teléfono es obligatorio.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="edad">Edad</label>
+      <input
+        id="edad"
+        name="edad"
+        type="number"
+        [(ngModel)]="usuario.edad"
+        #edad="ngModel"
+        required
+        min="18"
+      >
+
+      @if (edad.touched) {
+        @if (edad.hasError('required')) {
+          <small>La edad es obligatoria.</small>
+        } @else if (edad.hasError('min')) {
+          <small>Debes tener al menos 18 años.</small>
+        }
+      }
+    </div>
+
+    <div class="campo">
+      <label for="contrasena">Contraseña</label>
+      <input
+        id="contrasena"
+        name="contrasena"
+        type="password"
+        [(ngModel)]="usuario.contrasena"
+        #contrasena="ngModel"
+        required
+        minlength="6"
+        autocomplete="new-password"
+      >
+
+      @if (contrasena.touched) {
+        @if (contrasena.hasError('required')) {
+          <small>La contraseña es obligatoria.</small>
+        } @else if (contrasena.hasError('minlength')) {
+          <small>La contraseña debe tener al menos 6 caracteres.</small>
+        }
+      }
+    </div>
+
+    <button type="submit" [disabled]="formulario.invalid">
+      Registrar
+    </button>
+  </form>
+
+  @if (registrado) {
+    <section class="resultado" aria-live="polite">
+      <h2>Registro correcto</h2>
+      <p>Los datos cumplen con las validaciones del formulario.</p>
+    </section>
+  }
+</main>
