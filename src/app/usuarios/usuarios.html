@@ -1,0 +1,44 @@
+<main class="contenedor">
+  <h1>Lista de usuarios</h1>
+  <p>Datos obtenidos desde una API con una petición GET.</p>
+
+  <button
+    type="button"
+    (click)="cargarUsuarios()"
+    [disabled]="cargando()"
+  >
+    Actualizar lista
+  </button>
+
+  @if (cargando()) {
+    <p role="status">Cargando usuarios...</p>
+  } @else if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  } @else {
+    <div class="tabla">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Correo</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (usuario of usuarios(); track usuario.id) {
+            <tr>
+              <td>{{ usuario.id }}</td>
+              <td>{{ usuario.name }}</td>
+              <td>{{ usuario.email }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="3">No hay usuarios disponibles.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</main>
